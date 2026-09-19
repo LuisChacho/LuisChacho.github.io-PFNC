@@ -21,7 +21,7 @@ const questionsData = [
         id: 3, 
         topic: "Simplificación de Expresiones Algebraicas", 
         text: "Calcule el valor simplificado de: $$\\left( \\frac{27^2 \\cdot 9^{-1}}{3^4} \\right)^{1/2}$$", 
-        options: ["$3$", "$1$", "$9$", "$1/3$"], 
+        options: ["$1$", "$3$", "$9$", "$1/3$"], 
         correct: 0,
         explanation: "Expresando todo en base 3: <br>$27^2 = (3^3)^2 = 3^6$, $9^{-1} = (3^2)^{-1} = 3^{-2}$. <br>Numerador: $3^6 \\cdot 3^{-2} = 3^4$. <br>Fracción: $\\frac{3^4}{3^4} = 1$. <br>Raíz: $(1)^{1/2} = 1$."
     },
@@ -99,7 +99,7 @@ const questionsData = [
         id: 12, 
         topic: "Ecuaciones de Primer Grado", 
         text: "Resuelva la siguiente ecuación: $$\\frac{3x - 1}{4} - \\frac{x + 2}{2} = 1$$", 
-        options: ["$x = 7$", "$x = 5$", "$x = 9$", "$x = 3$"], 
+        options: ["$x = 9$", "$x = 7$", "$x = 5$", "$x = 3$"], 
         correct: 0,
         explanation: "Multiplicando toda la ecuación por el MCM ($4$): <br>$(3x - 1) - 2(x + 2) = 4 \\implies 3x - 1 - 2x - 4 = 4$ <br>$x - 5 = 4 \\implies x = 9$."
     },
@@ -353,6 +353,7 @@ let state = {
     answers: {},
     timeLeft: TOTAL_TIME,
     infractions: 0,
+    attempt: 1,
     isStarted: false,
     isFinished: false,
     completedDate: ''
@@ -362,10 +363,10 @@ let timerInterval = null;
 
 window.addEventListener('DOMContentLoaded', () => {
     loadState();
-    if (state.isStarted) {
+    if (state.isStarted && !state.isFinished) {
         document.getElementById('fullscreen-overlay').style.display = 'none';
         if (state.user.name) {
-            document.getElementById('user-display').textContent = `${state.user.name} (${state.user.id})`;
+            document.getElementById('user-display').textContent = `${state.user.name} (${state.user.id}) - Intento ${state.attempt}`;
         }
         renderGrid();
         renderQuestion();
@@ -384,6 +385,7 @@ function loadState() {
     if (saved) {
         try {
             state = JSON.parse(saved);
+            if (!state.attempt) state.attempt = 1;
             if (state.isFinished) {
                 showResultsScreen();
             }
@@ -404,7 +406,7 @@ function initExam() {
     state.isStarted = true;
     saveState();
 
-    document.getElementById('user-display').textContent = `${nameInput} (${idInput})`;
+    document.getElementById('user-display').textContent = `${nameInput} (${idInput}) - Intento ${state.attempt}`;
 
     const elem = document.documentElement;
     if (elem.requestFullscreen) elem.requestFullscreen().catch(() => {});
@@ -613,7 +615,7 @@ function showResultsScreen() {
     document.getElementById('results-screen').style.display = 'block';
 
     document.getElementById('res-student-name').textContent = state.user.name || "Estudiante";
-    document.getElementById('res-student-id').textContent = state.user.id || "N/A";
+    document.getElementById('res-student-id').textContent = `${state.user.id || "N/A"} (Intento ${state.attempt} de 2)`;
     document.getElementById('res-date').textContent = state.completedDate || new Date().toLocaleString('es-EC');
 
     let score = 0;
@@ -661,12 +663,55 @@ function showResultsScreen() {
     document.getElementById('res-accuracy').textContent = `${Math.round((score / questionsData.length) * 100)}%`;
     document.getElementById('res-infractions').textContent = state.infractions;
 
+    const retryBtn = document.getElementById('btn-retry');
+    if (retryBtn) {
+        if (state.attempt >= 2) {
+            retryBtn.disabled = true;
+            retryBtn.textContent = "🚫 Intentos Agotados (2/2)";
+            retryBtn.style.opacity = "0.6";
+            retryBtn.style.cursor = "not-allowed";
+        } else {
+            retryBtn.disabled = false;
+            retryBtn.textContent = "🔄 Realizar Segundo Intento";
+        }
+    }
+
     if (window.renderMathInElement) {
         renderMathInElement(reviewList, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });
     }
 }
 
-// Función para descargar reporte PDF formateado
+// Lógica para reiniciar y realizar el segundo intento
+function restartExam() {
+    if (state.attempt >= 2) return;
+
+    if (confirm("¿Desea comenzar su segundo y último intento? El tiempo se reiniciará a 80 minutos.")) {
+        state.attempt = 2;
+        state.currentIndex = 0;
+        state.answers = {};
+        state.timeLeft = TOTAL_TIME;
+        state.infractions = 0;
+        state.isStarted = true;
+        state.isFinished = false;
+        state.completedDate = '';
+        saveState();
+
+        document.getElementById('results-screen').style.display = 'none';
+        document.getElementById('exam-screen').classList.remove('hidden');
+        document.getElementById('timer-display').classList.remove('hidden');
+        document.getElementById('infraction-banner').style.display = 'none';
+        document.getElementById('infraction-count').textContent = '0';
+        document.getElementById('user-display').textContent = `${state.user.name} (${state.user.id}) - Intento 2`;
+
+        const elem = document.documentElement;
+        if (elem.requestFullscreen) elem.requestFullscreen().catch(() => {});
+
+        renderGrid();
+        renderQuestion();
+        startTimer();
+    }
+}
+
 function downloadPDF() {
     const element = document.getElementById('report-content');
     const { jsPDF } = window.jspdf;
@@ -679,6 +724,6 @@ function downloadPDF() {
         const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
         pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-        pdf.save(`Reporte_Evaluacion_${state.user.id || 'Estudiante'}.pdf`);
+        pdf.save(`Reporte_Evaluacion_${state.user.id || 'Estudiante'}_Intento${state.attempt}.pdf`);
     });
 }
