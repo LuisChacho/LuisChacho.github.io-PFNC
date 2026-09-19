@@ -63,33 +63,36 @@ const questionsData = [
     { id: 40, topic: "Combinatoria", text: "En un torneo de ajedrez participan $10$ jugadores. Si todos juegan contra todos una sola vez, ¿cuántas partidas se disputarán en total?", options: ["$45$", "$90$", "$100$", "$50$"], correct: 0 }
 ];
 
-// CONFIGURACIÓN DE EXAMEN
-const TOTAL_TIME = 60 * 60; // 60 minutos en segundos
-const STORAGE_KEY = "EVAL_NUMERICA_CARIAMANGA_STATE";
+const TOTAL_TIME = 60 * 60;
+const STORAGE_KEY = "EVAL_NUMERICA_PRO_STATE";
 
-// ESTADO GLOBAL
 let state = {
+    user: { name: '', id: '' },
     currentIndex: 0,
     answers: {},
     timeLeft: TOTAL_TIME,
     infractions: 0,
+    isStarted: false,
     isFinished: false
 };
 
 let timerInterval = null;
 
-// INICIALIZACIÓN
 window.addEventListener('DOMContentLoaded', () => {
     loadState();
-    renderGrid();
-    renderQuestion();
+    if (state.isStarted) {
+        document.getElementById('fullscreen-overlay').style.display = 'none';
+        if (state.user.name) {
+            document.getElementById('user-display').textContent = `${state.user.name} (${state.user.id})`;
+        }
+        renderGrid();
+        renderQuestion();
+        startTimer();
+    }
     setupSecurity();
     setupEventListeners();
-    startTimer();
-    preventBackNavigation();
 });
 
-// PERSISTENCIA EN LOCALSTORAGE
 function saveState() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
@@ -103,86 +106,90 @@ function loadState() {
                 showResultsScreen();
             }
         } catch (e) {
-            console.error("Error al cargar el estado previo:", e);
+            console.error(e);
         }
     }
 }
 
-// EVENT LISTENERS DE BOTONES
+function initExam() {
+    const nameInput = document.getElementById('student-name').value;
+    const idInput = document.getElementById('student-id').value;
+
+    if (!nameInput || !idInput) return;
+
+    state.user.name = nameInput;
+    state.user.id = idInput;
+    state.isStarted = true;
+    saveState();
+
+    document.getElementById('user-display').textContent = `${nameInput} (${idInput})`;
+
+    const elem = document.documentElement;
+    if (elem.requestFullscreen) elem.requestFullscreen().catch(() => {});
+
+    document.getElementById('fullscreen-overlay').style.display = 'none';
+    renderGrid();
+    renderQuestion();
+    startTimer();
+}
+
 function setupEventListeners() {
-    document.getElementById('btn-start-fullscreen').addEventListener('click', initFullscreen);
     document.getElementById('btn-prev').addEventListener('click', () => navigate(-1));
     document.getElementById('btn-next').addEventListener('click', () => navigate(1));
     document.getElementById('btn-finish-exam').addEventListener('click', confirmFinish);
-    document.getElementById('btn-restart-exam').addEventListener('click', restartExam);
-}
-
-// FULLSCREEN & KIOSKO
-function initFullscreen() {
-    const elem = document.documentElement;
-    if (elem.requestFullscreen) {
-        elem.requestFullscreen().catch(err => console.log(err));
-    } else if (elem.mozRequestFullScreen) {
-        elem.mozRequestFullScreen();
-    } else if (elem.webkitRequestFullscreen) {
-        elem.webkitRequestFullscreen();
-    } else if (elem.msRequestFullscreen) {
-        elem.msRequestFullscreen();
-    }
-    document.getElementById('fullscreen-overlay').style.display = 'none';
 }
 
 function setupSecurity() {
-    // Pantalla completa monitor
     document.addEventListener('fullscreenchange', () => {
-        if (!document.fullscreenElement && !state.isFinished) {
+        if (!document.fullscreenElement && state.isStarted && !state.isFinished) {
             document.getElementById('fullscreen-overlay').style.display = 'flex';
+            registerInfraction("Salida de Pantalla Completa");
         }
     });
 
-    // Visibilidad y Blur
-    window.addEventListener('visibilitychange', handleSecurityViolation);
-    window.addEventListener('blur', handleSecurityViolation);
+    window.addEventListener('visibilitychange', () => {
+        if (document.hidden && state.isStarted && !state.isFinished) {
+            registerInfraction("Cambio de Pestaña");
+        }
+    });
 
-    // Bloqueo de Clic Derecho
+    window.addEventListener('blur', () => {
+        if (state.isStarted && !state.isFinished) {
+            registerInfraction("Pérdida de foco del examen");
+        }
+    });
+
     document.addEventListener('contextmenu', e => e.preventDefault());
 
-    // Bloqueo de Teclas
     document.addEventListener('keydown', e => {
         if (
             e.key === 'F12' ||
-            (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-            (e.ctrlKey && (e.key === 'c' || e.key === 'v' || e.key === 'u' || e.key === 's' || e.key === 'p')) ||
+            (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+            (e.ctrlKey && (e.key === 'c' || e.key === 'v' || e.key === 'u' || e.key === 's' || e.key === 'a')) ||
             e.key === 'PrintScreen'
         ) {
             e.preventDefault();
-            registerInfraction("Atajo de teclado restringido");
+            registerInfraction("Intento de uso de atajo de teclado");
         }
     });
 }
 
-function handleSecurityViolation() {
-    if (!state.isFinished) {
-        registerInfraction("Cambio de pestaña / Fuga de foco");
+function registerInfraction(reason) {
+    if (state.isFinished) return;
+
+    state.infractions++;
+    saveState();
+
+    document.getElementById('infraction-count').textContent = state.infractions;
+    const banner = document.getElementById('infraction-banner');
+    banner.style.display = 'block';
+
+    if (state.infractions >= 3) {
+        alert("Ha alcanzado el límite máximo de 3 infracciones de seguridad. La evaluación se enviará automáticamente.");
+        finishExam();
     }
 }
 
-function registerInfraction(reason) {
-    state.infractions++;
-    saveState();
-    const banner = document.getElementById('infraction-banner');
-    banner.style.display = 'block';
-    setTimeout(() => { banner.style.display = 'none'; }, 4000);
-}
-
-function preventBackNavigation() {
-    history.pushState(null, null, location.href);
-    window.onpopstate = function () {
-        history.go(1);
-    };
-}
-
-// TIMER
 function startTimer() {
     clearInterval(timerInterval);
     timerInterval = setInterval(() => {
@@ -212,7 +219,6 @@ function updateTimerUI() {
     }
 }
 
-// RENDERIZADO DE PREGUNTAS
 function renderQuestion() {
     const q = questionsData[state.currentIndex];
     document.getElementById('question-number').textContent = `Pregunta ${String(state.currentIndex + 1).padStart(2, '0')} de ${questionsData.length}`;
@@ -243,18 +249,8 @@ function renderQuestion() {
     updateGridUI();
 
     if (window.renderMathInElement) {
-        renderMathInElement(document.getElementById('question-text'), {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ]
-        });
-        renderMathInElement(optionsContainer, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ]
-        });
+        renderMathInElement(document.getElementById('question-text'), { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });
+        renderMathInElement(optionsContainer, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });
     }
 }
 
@@ -279,7 +275,6 @@ function jumpToQuestion(index) {
     renderQuestion();
 }
 
-// MAPA Y PROGRESO
 function renderGrid() {
     const grid = document.getElementById('reactive-grid');
     grid.innerHTML = '';
@@ -310,7 +305,6 @@ function updateProgress() {
     document.getElementById('progress-fill').style.width = `${pct}%`;
 }
 
-// FINALIZACIÓN
 function confirmFinish() {
     const answeredCount = Object.keys(state.answers).length;
     const unanswered = questionsData.length - answeredCount;
@@ -332,6 +326,7 @@ function finishExam() {
 function showResultsScreen() {
     document.getElementById('exam-screen').classList.add('hidden');
     document.getElementById('timer-display').classList.add('hidden');
+    document.getElementById('fullscreen-overlay').style.display = 'none';
     document.getElementById('results-screen').style.display = 'block';
 
     let score = 0;
@@ -360,7 +355,7 @@ function showResultsScreen() {
         item.innerHTML = `
             ${statusBadge}
             <div class="q-title">${idx + 1}. ${q.text}</div>
-            <div style="font-size: 0.9rem; color: var(--text-muted);">
+            <div style="font-size: 0.85rem; color: var(--text-muted);">
                 Su respuesta: <strong>${userAns !== undefined ? letters[userAns] + ') ' + q.options[userAns] : 'Ninguna'}</strong><br>
                 Respuesta correcta: <strong style="color: var(--success);">${letters[q.correct]}) ${q.options[q.correct]}</strong>
             </div>
@@ -373,23 +368,6 @@ function showResultsScreen() {
     document.getElementById('res-infractions').textContent = state.infractions;
 
     if (window.renderMathInElement) {
-        renderMathInElement(reviewList, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ]
-        });
+        renderMathInElement(reviewList, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });
     }
-}
-
-function restartExam() {
-    localStorage.removeItem(STORAGE_KEY);
-    state = {
-        currentIndex: 0,
-        answers: {},
-        timeLeft: TOTAL_TIME,
-        infractions: 0,
-        isFinished: false
-    };
-    location.reload();
 }
