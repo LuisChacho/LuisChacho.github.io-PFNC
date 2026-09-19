@@ -3,143 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluación Numérica Profesional</title>
+    <title>EVALUACIÓN DIAGNÓSTICA - RAZONAMIENTO NUMÉRICO</title>
     
-    <!-- Estilos locales -->
-    <link rel="stylesheet" href="index.css">
-
-    <!-- KaTeX para renderizado de MathLaTeX -->
+    <!-- KaTeX Render -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
-    <!-- Librerías para generación de PDF -->
+    <!-- Librerías para Descarga e Impresión PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <link rel="stylesheet" href="index.css">
+    <script defer src="index.js"></script>
 </head>
 <body>
 
-    <!-- OVERLAY DE INICIO / PANTALLA COMPLETA -->
-    <div id="fullscreen-overlay" class="overlay">
-        <div class="modal-card">
-            <h2>Evaluación Numérica</h2>
-            <p>Ingrese sus datos para comenzar. La prueba se ejecutará en modo seguro a pantalla completa.</p>
-            <div class="input-group">
-                <label for="student-name">Nombre Completo:</label>
-                <input type="text" id="student-name" placeholder="Ej. Juan Pérez" required>
-            </div>
-            <div class="input-group">
-                <label for="student-id">Identificación / Código:</label>
-                <input type="text" id="student-id" placeholder="Ej. 1102345678" required>
-            </div>
-            <button class="btn-primary" onclick="initExam()">Iniciar Evaluación</button>
+    <!-- Modal de Identificación y Reingreso Seguros -->
+    <div id="fullscreen-overlay" class="overlay-modal">
+        <div class="modal-box">
+            <h1>PLATAFORMA DE EVALUACIÓN ESTANDARIZADA</h1>
+            <p>Ingrese sus datos institucionales para comenzar. La prueba funciona en modo supervisado (Pantalla Completa Obligatoria).</p>
+            
+            <form id="student-form" onsubmit="event.preventDefault(); initExam();">
+                <div class="form-group">
+                    <label>Nombre y Apellido Completo:</label>
+                    <input type="text" id="student-name" required placeholder="Ej. Carlos Mendoza">
+                </div>
+                <div class="form-group">
+                    <label>Número de Cédula / Identificación:</label>
+                    <input type="text" id="student-id" required placeholder="Ej. 1104523891">
+                </div>
+                <button type="submit" class="btn-start">Iniciar / Reanudar Evaluación</button>
+            </form>
         </div>
     </div>
 
-    <!-- PANTALLA PRINCIPAL DEL EXAMEN -->
-    <div id="exam-screen" class="app-container hidden">
-        <!-- Banner de Infracciones de Seguridad -->
-        <div id="infraction-banner" class="alert-banner" style="display: none;">
-            ⚠️ Advertencia de Seguridad: Se ha detectado una salida del entorno restringido. Infracciones: <span id="infraction-count">0</span>/3.
-        </div>
-
-        <!-- Encabezado con datos e indicador de tiempo -->
-        <header class="exam-header">
-            <div class="user-info">
-                <span id="user-display">Cargando datos...</span>
+    <!-- App Principal -->
+    <div id="app-container">
+        <header>
+            <div class="header-title">
+                <h2>RAZONAMIENTO NUMÉRICO Y DESPEJES</h2>
+                <span id="user-display">EVALUACIÓN DE HABILIDADES MATEMÁTICAS</span>
             </div>
             <div class="timer-badge" id="timer-display">
-                ⏱️ Tiempo Restante: <span id="timer">80:00</span>
+                ⏱️ <span id="timer">80:00</span>
             </div>
         </header>
 
-        <!-- Contenido Central -->
-        <div class="main-layout">
-            <!-- Columna Izquierda: Vista de Pregunta -->
-            <main class="question-view">
-                <div class="question-card">
-                    <div class="q-header">
-                        <span class="q-badge" id="question-number">Pregunta 01 de 40</span>
-                        <span class="q-topic" id="question-topic">Tema</span>
+        <div class="dashboard-body" id="exam-screen">
+            <main>
+                <div>
+                    <div id="infraction-banner">
+                        ⚠️ ALERTA DE SEGURIDAD: Pérdida de foco o salida detectada (<span id="infraction-count">0</span>/3). Al acumular 3 la prueba se auto-enviará.
                     </div>
-                    <div class="q-text" id="question-text">
-                        Cargando pregunta...
-                    </div>
-                    <div class="options-group" id="options-container">
-                        <!-- Las opciones se renderizan dinámicamente -->
+
+                    <div class="question-card">
+                        <div class="question-meta">
+                            <span id="question-number">Pregunta 01 de 40</span>
+                            <span id="question-topic">Tema: Simplificación</span>
+                        </div>
+                        <div class="question-text" id="question-text"></div>
+                        <div class="options-group" id="options-container"></div>
                     </div>
                 </div>
 
                 <div class="navigation-controls">
-                    <button class="btn-nav" id="btn-prev">⬅️ Anterior</button>
-                    <button class="btn-nav" id="btn-next">Siguiente ➡️</button>
-                    <button class="btn-finish" id="btn-finish-exam">Entregar Evaluación</button>
+                    <button class="btn-nav" id="btn-prev">Anterior</button>
+                    <button class="btn-nav" id="btn-next">Siguiente</button>
                 </div>
             </main>
 
-            <!-- Columna Derecha: Panel de Navegación Reactivo -->
-            <aside class="sidebar-panel">
-                <h3>Progreso general</h3>
-                <div class="progress-bar-container">
-                    <div class="progress-bar-fill" id="progress-fill" style="width: 0%;"></div>
-                </div>
-                <div class="progress-text" id="progress-percent">0%</div>
+            <aside>
+                <div>
+                    <div class="progress-section">
+                        <div class="progress-label">
+                            <span>Avance de Respuestas</span>
+                            <span id="progress-percent">0%</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="progress-fill"></div>
+                        </div>
+                    </div>
 
-                <h3>Mapa de Preguntas</h3>
-                <div class="questions-grid" id="reactive-grid">
-                    <!-- Cuadrícula reactiva renderizada por JavaScript -->
+                    <div class="grid-title">Navegación de Preguntas</div>
+                    <div class="reactive-grid" id="reactive-grid"></div>
                 </div>
+
+                <button class="btn-finish" id="btn-finish-exam">Finalizar Examen</button>
             </aside>
         </div>
-    </div>
 
-    <!-- PANTALLA DE RESULTADOS Y REPORTES -->
-    <div id="results-screen" class="app-container" style="display: none;">
-        <div class="results-card" id="report-content">
-            <div class="report-header">
-                <h2>Reporte de Resultados de Evaluación</h2>
-                <div class="student-meta">
-                    <p><strong>Estudiante:</strong> <span id="res-student-name">-</span></p>
-                    <p><strong>Identificación:</strong> <span id="res-student-id">-</span></p>
-                    <p><strong>Fecha de Finalización:</strong> <span id="res-date">-</span></p>
+        <!-- Pantalla de Calificación Final y Reporte -->
+        <div id="results-screen">
+            <div class="results-container" id="report-content">
+                <div class="report-header">
+                    <h1 style="color: var(--primary); margin-bottom: 5px;">Informe Oficial de Evaluación</h1>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">Razonamiento Numérico y Despejes Algebraicos</p>
+                    
+                    <div class="student-info-box" style="margin-top: 15px; padding: 12px; background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px;">
+                        <p><strong>Estudiante:</strong> <span id="res-student-name">-</span></p>
+                        <p><strong>Cédula / ID:</strong> <span id="res-student-id">-</span></p>
+                        <p><strong>Fecha de Realización:</strong> <span id="res-date">-</span></p>
+                    </div>
                 </div>
-            </div>
+                
+                <div class="score-cards" style="margin-top: 20px;">
+                    <div class="card-stat">
+                        <h3>Aciertos obtenidos</h3>
+                        <div class="value" id="res-score">0/40</div>
+                    </div>
+                    <div class="card-stat">
+                        <h3>Calificación / 10</h3>
+                        <div class="value" id="res-grade" style="color: var(--accent);">0.00</div>
+                    </div>
+                    <div class="card-stat">
+                        <h3>Rendimiento %</h3>
+                        <div class="value" id="res-accuracy">0%</div>
+                    </div>
+                    <div class="card-stat">
+                        <h3>Infracciones</h3>
+                        <div class="value" style="color: var(--danger);" id="res-infractions">0</div>
+                    </div>
+                </div>
 
-            <div class="metrics-grid">
-                <div class="metric-box">
-                    <div class="metric-title">Aciertos</div>
-                    <div class="metric-value" id="res-score">0/40</div>
+                <div class="action-buttons-group">
+                    <button class="btn-download" onclick="downloadPDF()">📄 Descargar Reporte (PDF)</button>
+                    <button class="btn-print" onclick="window.print()">🖨️ Imprimir Reporte</button>
+                    <button class="btn-restart" onclick="resetExam()">🔄 Volver a Intentar</button>
                 </div>
-                <div class="metric-box">
-                    <div class="metric-title">Calificación Final</div>
-                    <div class="metric-value highlight" id="res-grade">0.00 / 10</div>
-                </div>
-                <div class="metric-box">
-                    <div class="metric-title">Precisión</div>
-                    <div class="metric-value" id="res-accuracy">0%</div>
-                </div>
-                <div class="metric-box">
-                    <div class="metric-title">Infracciones Registradas</div>
-                    <div class="metric-value danger" id="res-infractions">0</div>
-                </div>
-            </div>
 
-            <div class="review-section">
-                <h3>Solucionario Paso a Paso y Retroalimentación</h3>
-                <div id="review-list">
-                    <!-- Detalle de preguntas, respuestas tomadas y solución paso a paso -->
+                <div class="review-section">
+                    <h2 style="margin-bottom: 20px; font-size: 1.15rem; color: var(--primary);">Retroalimentación y Solucionario Detallado</h2>
+                    <div id="review-list"></div>
                 </div>
             </div>
         </div>
-
-        <div class="action-buttons-group">
-            <button class="btn-download" onclick="downloadPDF()">📄 Descargar Reporte (PDF)</button>
-            <button class="btn-print" onclick="window.print()">🖨️ Imprimir Reporte</button>
-            <button class="btn-retry" id="btn-retry" onclick="restartExam()">🔄 Realizar Segundo Intento</button>
-        </div>
     </div>
 
-    <!-- Script principal Lógica/Seguridad -->
-    <script src="index.js"></script>
 </body>
 </html>

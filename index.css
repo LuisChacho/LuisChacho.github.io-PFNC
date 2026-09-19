@@ -496,6 +496,23 @@ aside {
     background: #f1f5f9;
 }
 
+.btn-restart {
+    flex: 1;
+    background: #10b981;
+    color: #ffffff;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-restart:hover {
+    background: #059669;
+}
+
 .review-section {
     background: var(--surface);
     border-radius: 10px;
