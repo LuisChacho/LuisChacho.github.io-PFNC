@@ -10,6 +10,10 @@
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
+    <!-- Librerías para Descarga e Impresión PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
     <link rel="stylesheet" href="index.css">
     <script defer src="index.js"></script>
 </head>
@@ -18,7 +22,7 @@
     <!-- Modal de Identificación y Reingreso Seguros -->
     <div id="fullscreen-overlay" class="overlay-modal">
         <div class="modal-box">
-            <h1>PLATA DE EVALUACIÓN ESTANDARIZADA</h1>
+            <h1>PLATAFORMA DE EVALUACIÓN ESTANDARIZADA</h1>
             <p>Ingrese sus datos institucionales para comenzar. La prueba funciona en modo supervisado (Pantalla Completa Obligatoria).</p>
             
             <form id="student-form" onsubmit="event.preventDefault(); initExam();">
@@ -90,18 +94,31 @@
             </aside>
         </div>
 
-        <!-- Pantalla de Calificación Final -->
+        <!-- Pantalla de Calificación Final y Reporte -->
         <div id="results-screen">
-            <div class="results-container">
-                <h1 style="margin-bottom: 25px; color: var(--primary);">Informe de Resultados</h1>
+            <div class="results-container" id="report-content">
+                <div class="report-header">
+                    <h1 style="color: var(--primary); margin-bottom: 5px;">Informe Oficial de Evaluación</h1>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">Razonamiento Numérico y Despejes Algebraicos</p>
+                    
+                    <div class="student-info-box" style="margin-top: 15px; padding: 12px; background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px;">
+                        <p><strong>Estudiante:</strong> <span id="res-student-name">-</span></p>
+                        <p><strong>Cédula / ID:</strong> <span id="res-student-id">-</span></p>
+                        <p><strong>Fecha de Realización:</strong> <span id="res-date">-</span></p>
+                    </div>
+                </div>
                 
-                <div class="score-cards">
+                <div class="score-cards" style="margin-top: 20px;">
                     <div class="card-stat">
-                        <h3>Reactivos Correctos</h3>
+                        <h3>Aciertos obtenidos</h3>
                         <div class="value" id="res-score">0/40</div>
                     </div>
                     <div class="card-stat">
-                        <h3>Rendimiento Total</h3>
+                        <h3>Calificación / 10</h3>
+                        <div class="value" id="res-grade" style="color: var(--accent);">0.00</div>
+                    </div>
+                    <div class="card-stat">
+                        <h3>Rendimiento %</h3>
                         <div class="value" id="res-accuracy">0%</div>
                     </div>
                     <div class="card-stat">
@@ -110,8 +127,13 @@
                     </div>
                 </div>
 
+                <div class="action-buttons-group">
+                    <button class="btn-download" onclick="downloadPDF()">📄 Descargar Reporte (PDF)</button>
+                    <button class="btn-print" onclick="window.print()">🖨️ Imprimir Reporte</button>
+                </div>
+
                 <div class="review-section">
-                    <h2 style="margin-bottom: 20px; font-size: 1.1rem; color: var(--primary);">Revisión de Desempeño por Pregunta</h2>
+                    <h2 style="margin-bottom: 20px; font-size: 1.15rem; color: var(--primary);">Retroalimentación y Solucionario Detallado</h2>
                     <div id="review-list"></div>
                 </div>
             </div>
