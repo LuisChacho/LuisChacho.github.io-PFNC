@@ -1,295 +1,351 @@
-// BANCO DE 40 PREGUNTAS EXACTAS SOBRE DESPEJES DE FÓRMULAS (FÍSICA Y MATEMÁTICA)
+// BANCO DE 40 PREGUNTAS CON RETROALIMENTACIÓN / SOLUCIONARIO PASO A PASO
 const questionsData = [
-    // --- BLOQUE 1: DESPEJES EN FÍSICA CLÁSICA Y CINEMÁTICA (14 PREGUNTAS) ---
+    // Tema 1: Simplificación (3)
     { 
-        id: 1, topic: "Cinemática - MRUV", 
-        text: "Dada la ecuación de itinerario de la posición: $$d = v_0 t + \\frac{1}{2} a t^2$$, despeje la aceleración ($a$):", 
-        options: ["$$a = \\frac{2(d - v_0 t)}{t^2}$$", "$$a = \\frac{d - v_0 t}{t^2}$$", "$$a = \\frac{2d - v_0}{t^2}$$", "$$a = \\frac{d - 2v_0 t}{2t^2}$$"], 
+        id: 1, 
+        topic: "Simplificación de Expresiones Algebraicas", 
+        text: "Simplifique la siguiente expresión: $$\\frac{(x^2 y^{-3})^3}{(x^{-1} y^2)^2}$$", 
+        options: ["$x^8 y^{-13}$", "$x^4 y^{-11}$", "$x^8 y^{-7}$", "$x^5 y^{-13}$"], 
         correct: 0,
-        explanation: "1. Restamos $v_0 t$ en ambos lados: $d - v_0 t = \\frac{1}{2} a t^2$. <br>2. Multiplicamos por 2: $2(d - v_0 t) = a t^2$. <br>3. Dividimos entre $t^2$: $a = \\frac{2(d - v_0 t)}{t^2}$."
+        explanation: "Aplicando propiedades de los exponentes: <br>1. Numerador: $(x^2 y^{-3})^3 = x^6 y^{-9}$ <br>2. Denominador: $(x^{-1} y^2)^2 = x^{-2} y^4$ <br>3. División: $x^{6 - (-2)} y^{-9 - 4} = x^8 y^{-13}$."
     },
     { 
-        id: 2, topic: "Cinemática - Velocidad Final", 
-        text: "A partir de la ecuación independiente del tiempo: $$v_f^2 = v_0^2 + 2ad$$, despeje la distancia ($d$):", 
-        options: ["$$d = \\frac{v_f^2 - v_0^2}{2a}$$", "$$d = \\frac{2(v_f^2 - v_0^2)}{a}$$", "$$d = \\frac{v_f - v_0}{2a}$$", "$$d = \\frac{v_f^2 + v_0^2}{2a}$$"], 
+        id: 2, 
+        topic: "Simplificación de Expresiones Algebraicas", 
+        text: "Al simplificar la expresión $\\sqrt[3]{a^6 b^9 c^{12}}$, se obtiene:", 
+        options: ["$a^2 b^3 c^4$", "$a^3 b^3 c^4$", "$a^2 b^6 c^9$", "$a^3 b^6 c^8$"], 
         correct: 0,
-        explanation: "1. Pasamos $v_0^2$ restando: $v_f^2 - v_0^2 = 2ad$. <br>2. Despejamos $d$ dividiendo por $2a$: $d = \\frac{v_f^2 - v_0^2}{2a}$."
+        explanation: "Se divide cada exponente por el índice de la raíz ($3$): <br> $a^{6/3} b^{9/3} c^{12/3} = a^2 b^3 c^4$."
     },
     { 
-        id: 3, topic: "Cinemática - Velocidad Media", 
-        text: "Dada la fórmula de velocidad media o promedio: $$v_m = \\frac{v_f + v_0}{2}$$, despeje la velocidad final ($v_f$):", 
-        options: ["$$v_f = 2v_m - v_0$$", "$$v_f = \\frac{v_m - v_0}{2}$$", "$$v_f = 2(v_m + v_0)$$", "$$v_f = v_m - 2v_0$$"], 
+        id: 3, 
+        topic: "Simplificación de Expresiones Algebraicas", 
+        text: "Calcule el valor simplificado de: $$\\left( \\frac{27^2 \\cdot 9^{-1}}{3^4} \\right)^{1/2}$$", 
+        options: ["$3$", "$1$", "$9$", "$1/3$"], 
         correct: 0,
-        explanation: "1. Multiplicamos por 2: $2v_m = v_f + v_0$. <br>2. Restamos $v_0$: $v_f = 2v_m - v_0$."
-    },
-    { 
-        id: 4, topic: "Dinámica - Segunda Ley de Newton", 
-        text: "Considerando la fuerza de fricción y la segunda ley: $$F - f_r = m \\cdot a$$, despeje la masa ($m$):", 
-        options: ["$$m = \\frac{F - f_r}{a}$$", "$$m = \\frac{F + f_r}{a}$$", "$$m = \\frac{a}{F - f_r}$$", "$$m = \\frac{F}{a} - f_r$$"], 
-        correct: 0,
-        explanation: "1. El término $(F - f_r)$ actúa como la fuerza neta $F_n$. <br>2. Dividiendo entre la aceleración $a$ se obtiene $m = \\frac{F - f_r}{a}$."
-    },
-    { 
-        id: 5, topic: "Dinámica - Fuerza Gravitacional", 
-        text: "De la ley de gravitación universal: $$F = G \\frac{m_1 m_2}{r^2}$$, despeje la distancia entre masas ($r$):", 
-        options: ["$$r = \\sqrt{\\frac{G m_1 m_2}{F}}$$", "$$r = \\frac{G m_1 m_2}{F^2}$$", "$$r = \\sqrt{\\frac{F}{G m_1 m_2}}$$", "$$r = \\frac{\\sqrt{G m_1 m_2}}{F}$$"], 
-        correct: 0,
-        explanation: "1. Intercambiamos $r^2$ y $F$: $r^2 = \\frac{G m_1 m_2}{F}$. <br>2. Aplicamos raíz cuadrada: $r = \\sqrt{\\frac{G m_1 m_2}{F}}$."
-    },
-    { 
-        id: 6, topic: "Trabajo y Energía - Energía Cinética", 
-        text: "Dada la fórmula de la energía cinética: $$E_k = \\frac{1}{2} m v^2$$, despeje la velocidad ($v$):", 
-        options: ["$$v = \\sqrt{\\frac{2E_k}{m}}$$", "$$v = \\frac{\\sqrt{E_k}}{2m}$$", "$$v = \\frac{2E_k}{m}$$", "$$v = \\sqrt{\\frac{E_k}{2m}}$$"], 
-        correct: 0,
-        explanation: "1. Multiplicamos por 2: $2E_k = m v^2$. <br>2. Dividimos entre $m$: $v^2 = \\frac{2E_k}{m}$. <br>3. Aplicamos raíz: $v = \\sqrt{\\frac{2E_k}{m}}$."
-    },
-    { 
-        id: 7, topic: "Trabajo y Energía - Energía Potencial", 
-        text: "En la expresión de energía potencial gravitatoria: $$E_p = mgh$$, despeje la altura ($h$):", 
-        options: ["$$h = \\frac{E_p}{mg}$$", "$$h = \\frac{mg}{E_p}$$", "$$h = E_p - mg$$", "$$h = \\frac{E_p}{m} - g$$"], 
-        correct: 0,
-        explanation: "1. Como $mg$ multiplica a $h$, pasa al otro lado dividiendo: $h = \\frac{E_p}{mg}$."
-    },
-    { 
-        id: 8, topic: "Trabajo, Potencia y Energía", 
-        text: "Dado que la potencia se define como el trabajo sobre el tiempo ($P = \\frac{W}{t}$) y el trabajo es $W = F \\cdot d \\cdot \\cos(\\theta)$, despeje la fuerza ($F$):", 
-        options: ["$$F = \\frac{P \\cdot t}{d \\cdot \\cos(\\theta)}$$", "$$F = \\frac{P \\cdot d}{t \\cdot \\cos(\\theta)}$$", "$$F = \\frac{d \\cdot \\cos(\\theta)}{P \\cdot t}$$", "$$F = P \\cdot t \\cdot d \\cdot \\cos(\\theta)$$"], 
-        correct: 0,
-        explanation: "1. Sustituyendo $W$: $P = \\frac{F \\cdot d \\cdot \\cos(\\theta)}{t}$. <br>2. Despejando $F$: $F = \\frac{P \\cdot t}{d \\cdot \\cos(\\theta)}$."
-    },
-    { 
-        id: 9, topic: "Termodinámica - Ley de Gases Ideales", 
-        text: "De la ecuación de estado de los gases ideales: $$P V = n R T$$, despeje la temperatura absoluta ($T$):", 
-        options: ["$$T = \\frac{P V}{n R}$$", "$$T = \\frac{n R}{P V}$$", "$$T = P V n R$$", "$$T = \\frac{P}{V n R}$$"], 
-        correct: 0,
-        explanation: "1. El producto $n R$ multiplica a $T$. <br>2. Pasan dividiendo al miembro izquierdo: $T = \\frac{P V}{n R}$."
-    },
-    { 
-        id: 10, topic: "Termodinámica - Dilatación Térmica", 
-        text: "En la fórmula de dilatación lineal: $$L_f = L_0 (1 + \\alpha \\Delta T)$$, despeje el coeficiente de dilatación ($\\alpha$):", 
-        options: ["$$\\alpha = \\frac{L_f - L_0}{L_0 \\Delta T}$$", "$$$\\alpha = \\frac{L_f}{L_0 \\Delta T}$$", "$$$\\alpha = \\frac{L_0 \\Delta T}{L_f - L_0}$$", "$$$\\alpha = \\frac{L_f - L_0}{\\Delta T}$$"], 
-        correct: 0,
-        explanation: "1. Dividimos entre $L_0$: $\\frac{L_f}{L_0} = 1 + \\alpha \\Delta T$. <br>2. Restamos 1: $\\frac{L_f}{L_0} - 1 = \\frac{L_f - L_0}{L_0} = \\alpha \\Delta T$. <br>3. Dividimos entre $\\Delta T$."
-    },
-    { 
-        id: 11, topic: "Electromagnetismo - Ley de Ohm", 
-        text: "Dada la relación de potencia eléctrica basada en la Ley de Ohm: $$P = \\frac{V^2}{R}$$, despeje el voltaje ($V$):", 
-        options: ["$$V = \\sqrt{P \\cdot R}$$", "$$V = \\frac{P}{R}$$", "$$V = P \\cdot R^2$$", "$$V = \\frac{\\sqrt{P}}{R}$$"], 
-        correct: 0,
-        explanation: "1. Multiplicamos por $R$: $P \\cdot R = V^2$. <br>2. Aplicamos raíz cuadrada: $V = \\sqrt{P \\cdot R}$."
-    },
-    { 
-        id: 12, topic: "Electromagnetismo - Resistencias en Paralelo", 
-        text: "Para dos resistencias en paralelo se cumple: $$\\frac{1}{R_t} = \\frac{1}{R_1} + \\frac{1}{R_2}$$, despeje la resistencia total ($R_t$):", 
-        options: ["$$R_t = \\frac{R_1 R_2}{R_1 + R_2}$$", "$$R_t = R_1 + R_2$$", "$$R_t = \\frac{R_1 + R_2}{R_1 R_2}$$", "$$R_t = \\sqrt{R_1 R_2}$$"], 
-        correct: 0,
-        explanation: "1. Sumamos fracciones del miembro derecho: $\\frac{1}{R_t} = \\frac{R_2 + R_1}{R_1 R_2}$. <br>2. Invertimos ambos lados: $R_t = \\frac{R_1 R_2}{R_1 + R_2}$."
-    },
-    { 
-        id: 13, topic: "Ondas y Acústica - Frecuencia y Periodo", 
-        text: "Dada la fórmula del efecto Doppler o velocidad de propagación $$v = \\lambda \\cdot f$$ combinada con $f = \\frac{1}{T}$, despeje la longitud de onda ($\\lambda$):", 
-        options: ["$$\\lambda = \\frac{v}{f}$$", "$$$\\lambda = v \\cdot f$$", "$$","$$\\lambda = \\frac{f}{v}$$", "$$$\\lambda = v - f$$"], 
-        correct: 0,
-        explanation: "1. De $v = \\lambda \\cdot f$, como $f$ multiplica a $\\lambda$, pasa dividiendo: $\\lambda = \\frac{v}{f}$."
-    },
-    { 
-        id: 14, topic: "Hidrostática - Principio de Arquímedes", 
-        text: "En la presión hidrostática y empuje: $$E = \\rho_1 g V_{sum}$$ donde $\\rho_1$ es densidad del líquido, despeje el volumen sumergido ($V_{sum}$):", 
-        options: ["$$V_{sum} = \\frac{E}{\\rho_1 g}$$", "$$V_{sum} = E \\cdot \\rho_1 g$$", "$$V_{sum} = \\frac{\\rho_1 g}{E}$$", "$$V_{sum} = \\frac{E}{g} - \\rho_1$$"], 
-        correct: 0,
-        explanation: "1. El término $(\\rho_1 g)$ multiplica al volumen. <br>2. Pasa dividiendo: $V_{sum} = \\frac{E}{\\rho_1 g}$."
+        explanation: "Expresando todo en base 3: <br>$27^2 = (3^3)^2 = 3^6$, $9^{-1} = (3^2)^{-1} = 3^{-2}$. <br>Numerador: $3^6 \\cdot 3^{-2} = 3^4$. <br>Fracción: $\\frac{3^4}{3^4} = 1$. <br>Raíz: $(1)^{1/2} = 1$."
     },
 
-    // --- BLOQUE 2: DESPEJES EN ÁLGEBRA Y FUNCIONES MATEMÁTICAS (14 PREGUNTAS) ---
+    // Tema 2: Jerarquía de operadores (3)
     { 
-        id: 15, topic: "Álgebra - Ecuación Exponencial", 
-        text: "Dada la función de crecimiento exponencial $$P(t) = P_0 e^{kt}$$, despeje el tiempo ($t$):", 
-        options: ["$$t = \\frac{\\ln(P / P_0)}{k}$$", "$$t = \\frac{\\ln(P_0 / P)}{k}$$", "$$t = \\frac{P}{P_0 k}$$", "$$t = \\ln\\left(\\frac{P}{P_0 k}\\right)$$"], 
+        id: 4, 
+        topic: "Jerarquía de Operadores", 
+        text: "Determine el resultado numérico de: $$12 - 4 \\div 2 + 3 \\cdot (5 - 2)^2$$", 
+        options: ["$37$", "$27$", "$41$", "$19$"], 
         correct: 0,
-        explanation: "1. Dividimos entre $P_0$: $\\frac{P}{P_0} = e^{kt}$. <br>2. Aplicamos logaritmo natural: $\\ln(P/P_0) = kt$. <br>3. Despejamos $t$: $t = \\frac{\\ln(P/P_0)}{k}$."
+        explanation: "1. Paréntesis: $(5-2) = 3$ <br>2. Potencia: $3^2 = 9$ <br>3. División y Multiplicación: $4 \\div 2 = 2$ y $3 \\cdot 9 = 27$ <br>4. Suma y Resta: $12 - 2 + 27 = 37$."
     },
     { 
-        id: 16, topic: "Álgebra - Cambio de Base Logarítmica", 
-        text: "Dada la expresión logarítmica $$y = \\log_b(x)$$, despeje el argumento ($x$):", 
-        options: ["$$x = b^y$$", "$$x = y^b$$", "$$x = b \\cdot y$$", "$$x = \\frac{y}{b}$$"], 
+        id: 5, 
+        topic: "Jerarquía de Operadores", 
+        text: "Evalúe la siguiente expresión: $$20 - [2 + 3 \\cdot (8 - 6)] \\div 2$$", 
+        options: ["$16$", "$14$", "$18$", "$12$"], 
         correct: 0,
-        explanation: "Por definición de logaritmo, la base elevada al resultado da el argumento: $x = b^y$."
+        explanation: "1. Paréntesis interno: $(8-6) = 2$ <br>2. Multiplicación en corchete: $3 \\cdot 2 = 6$ <br>3. Suma en corchete: $2 + 6 = 8$ <br>4. División: $8 \\div 2 = 4$ <br>5. Resta final: $20 - 4 = 16$."
     },
     { 
-        id: 17, topic: "Álgebra - Ecuación Cuadrática General", 
-        text: "Dada la fórmula general de la ecuación cuadrática $ax^2 + bx + c = 0$, despeje $x$ mediante la fórmula resolvente:", 
-        options: ["$$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$", "$$x = \\frac{b \\pm \\sqrt{b^2 + 4ac}}{a}$$", "$$x = \\frac{-b \\pm \\sqrt{4ac - b^2}}{2a}$$", "$$x = \\frac{-2b \\pm \\sqrt{b^2 - 4ac}}{a}$$"], 
+        id: 6, 
+        topic: "Jerarquía de Operadores", 
+        text: "Calcule el resultado exacto de: $$5 + 2 \\cdot 3^2 - 18 \\div 3$$", 
+        options: ["$17$", "$15$", "$21$", "$23$"], 
         correct: 0,
-        explanation: "Es la fórmula cuadrática estándar derivada por completación de trinomio cuadrado perfecto."
-    },
-    { 
-        id: 18, topic: "Trigonometría - Ley de Senos", 
-        text: "Dada la Ley de Senos en un triángulo: $$\\frac{a}{\\sin(A)} = \\frac{b}{\\sin(B)}$$, despeje el seno del ángulo $B$ ($\\sin(B)$):", 
-        options: ["$$\\sin(B) = \\frac{b \\cdot \\sin(A)}{a}$$", "$$$\\sin(B) = \\frac{a \\cdot \\sin(A)}{b}$$", "$$$\\sin(B) = \\frac{a \\cdot b}{\\sin(A)}$$", "$$$\\sin(B) = \\frac{\\sin(A)}{a \\cdot b}$$"], 
-        correct: 0,
-        explanation: "1. Multiplicamos en cruz: $a \\cdot \\sin(B) = b \\cdot \\sin(A)$. <br>2. Dividimos entre $a$: $\\sin(B) = \\frac{b \\cdot \\sin(A)}{a}$."
-    },
-    { 
-        id: 19, topic: "Trigonometría - Ley de Cosenos", 
-        text: "En la Ley de Cosenos: $$c^2 = a^2 + b^2 - 2ab \\cos(C)$$, despeje el coseno del ángulo $C$ ($\\cos(C)$):", 
-        options: ["$$\\cos(C) = \\frac{a^2 + b^2 - c^2}{2ab}$$", "$$","$$\\cos(C) = \\frac{c^2 - a^2 - b^2}{ab}$$", "$$","$$\\cos(C) = \\frac{2ab}{a^2 + b^2 - c^2}$$", "$$","$$\\cos(C) = \\frac{a^2 + b^2 + c^2}{2ab}$$"], 
-        correct: 0,
-        explanation: "1. Pasamos $2ab \\cos(C)$ sumando y $c^2$ restando: $2ab \\cos(C) = a^2 + b^2 - c^2$. <br>2. Dividimos entre $2ab$."
-    },
-    { 
-        id: 20, topic: "Geometría Analítica - Ecuación de la Recta", 
-        text: "Dada la ecuación punto-pendiente de la recta: $$y - y_1 = m(x - x_1)$$, despeje la pendiente ($m$):", 
-        options: ["$$m = \\frac{y - y_1}{x - x_1}$$", "$$m = \\frac{x - x_1}{y - y_1}$$", "$$m = (y - y_1)(x - x_1)$$", "$$m = y - y_1 - x + x_1$$"], 
-        correct: 0,
-        explanation: "1. Como $(x - x_1)$ multiplica a $m$, pasa dividiendo al otro miembro: $m = \\frac{y - y_1}{x - x_1}$."
-    },
-    { 
-        id: 21, topic: "Geometría Analítica - Circunferencia", 
-        text: "Dada la ecuación canónica de la circunferencia: $$(x - h)^2 + (y - k)^2 = r^2$$, despeje el radio ($r$):", 
-        options: ["$$r = \\sqrt{(x - h)^2 + (y - k)^2}$$", "$$r = (x - h) + (y - k)$$", "$$r = \\sqrt{x^2 + y^2 - h - k}$$", "$$r = \\frac{(x - h)^2 + (y - k)^2}{2}$$"], 
-        correct: 0,
-        explanation: "Aplicando raíz cuadrada directamente a ambos miembros: $r = \\sqrt{(x - h)^2 + (y - k)^2}$."
-    },
-    { 
-        id: 22, topic: "Geometría del Espacio - Cono", 
-        text: "Dada la fórmula del volumen de un cono: $$V = \\frac{1}{3} \\pi r^2 h$$, despeje el radio de la base ($r$):", 
-        options: ["$$r = \\sqrt{\\frac{3V}{\\pi h}}$$", "$$r = \\frac{3V}{\\pi h}$$", "$$r = \\sqrt{\\frac{V}{3\\pi h}}$$", "$$r = \\frac{\\sqrt{3V}}{\\pi h}$$"], 
-        correct: 0,
-        explanation: "1. Multiplicamos por 3: $3V = \\pi r^2 h$. <br>2. Dividimos entre $\\pi h$: $r^2 = \\frac{3V}{\\pi h}$. <br>3. Aplicamos raíz."
-    },
-    { 
-        id: 23, topic: "Geometría del Espacio - Esfera", 
-        text: "En la fórmula del área superficial de una esfera: $$A = 4 \\pi r^2$$, despeje el radio ($r$):", 
-        options: ["$$r = \\sqrt{\\frac{A}{4\\pi}}$$", "$$r = \\frac{A}{2\\pi}$$", "$$r = \\sqrt{\\frac{4\\pi}{A}}$$", "$$r = \\frac{\\sqrt{A}}{4\\pi}$$"], 
-        correct: 0,
-        explanation: "1. Dividimos entre $4\\pi$: $r^2 = \\frac{A}{4\\pi}$. <br>2. Aplicamos raíz cuadrada."
-    },
-    { 
-        id: 24, topic: "Progresiones - Suma Aritmética", 
-        text: "Dada la suma de una progresión aritmética: $$S_n = \\frac{n}{2} (a_1 + a_n)$$, despeje el número de términos ($n$):", 
-        options: ["$$n = \\frac{2S_n}{a_1 + a_n}$$", "$$n = \\frac{S_n}{2(a_1 + a_n)}$$", "$$n = \\frac{a_1 + a_n}{2S_n}$$", "$$n = \\frac{S_n}{a_1 + a_n}$$"], 
-        correct: 0,
-        explanation: "1. Multiplicamos por 2: $2S_n = n(a_1 + a_n)$. <br>2. Dividimos entre $(a_1 + a_n)$."
-    },
-    { 
-        id: 25, topic: "Estadística - Desviación Estándar", 
-        text: "Dada la varianza muestral: $$s^2 = \\frac{\\sum (x_i - \\bar{x})^2}{n - 1}$$, despeje el tamaño muestral menos uno ($n - 1$):", 
-        options: ["$$n - 1 = \\frac{\\sum (x_i - \\bar{x})^2}{s^2}$$", "$$n - 1 = s^2 \\cdot \\sum (x_i - \\bar{x})^2$$", "$$n - 1 = \\frac{s^2}{\\sum (x_i - \\bar{x})^2}$$", "$$n - 1 = \\sqrt{\\frac{\\sum (x_i - \\bar{x})^2}{s^2}}$$"], 
-        correct: 0,
-        explanation: "Intercambiamos de posición $s^2$ y $(n - 1)$ en la división."
-    },
-    { 
-        id: 26, topic: "Álgebra - Cambio de Variable", 
-        text: "Dada la relación de conversión de temperatura: $$C = \\frac{5}{9}(F - 32)$$, despeje la temperatura en Fahrenheit ($F$):", 
-        options: ["$$F = \\frac{9}{5}C + 32$$", "$$F = \\frac{5}{9}C - 32$$", "$$F = \\frac{9C + 32}{5}$$", "$$F = \\frac{9}{5}(C + 32)$$"], 
-        correct: 0,
-        explanation: "1. Multiplicamos por $\\frac{9}{5}$: $\\frac{9}{5}C = F - 32$. <br>2. Sumamos 32: $F = \\frac{9}{5}C + 32$."
-    },
-    { 
-        id: 27, topic: "Funciones - Composición e Inversa", 
-        text: "Dada la función lineal invertibles $y = mx + b$, despeje la variable independiente ($x$):", 
-        options: ["$$x = \\frac{y - b}{m}$$", "$$x = \\frac{y + b}{m}$$", "$$x = \\frac{m}{y - b}$$", "$$x = \\frac{y}{m} - b$$"], 
-        correct: 0,
-        explanation: "1. Restamos $b$: $y - b = mx$. <br>2. Dividimos entre $m$: $x = \\frac{y - b}{m}$."
-    },
-    { 
-        id: 28, topic: "Álgebra - Radicales", 
-        text: "Dada la ecuación con radicales $$y = \\sqrt{ax + b}$$, despeje la variable $x$:", 
-        options: ["$$x = \\frac{y^2 - b}{a}$$", "$$x = \\frac{y^2 + b}{a}$$", "$$x = \\frac{(y - b)^2}{a}$$", "$$x = y^2 - \\frac{b}{a}$$"], 
-        correct: 0,
-        explanation: "1. Elevamos al cuadrado: $y^2 = ax + b$. <br>2. Restamos $b$: $y^2 - b = ax$. <br>3. Dividimos entre $a$."
+        explanation: "1. Potencia: $3^2 = 9$ <br>2. Multiplicación y división: $2 \\cdot 9 = 18$ y $18 \\div 3 = 6$ <br>3. Operaciones finales: $5 + 18 - 6 = 17$."
     },
 
-    // --- BLOQUE 3: RAZONAMIENTO NUMÉRICO Y APLICACIONES MIXTAS (12 PREGUNTAS) ---
+    // Tema 3: Expresiones algebraicas (5)
     { 
-        id: 29, topic: "Razonamiento - Fracciones Continuas", 
-        text: "Si se cumple la proporción $$\\frac{x + y}{y} = k$$, despeje la razón $x/y$:", 
-        options: ["$$\\frac{x}{y} = k - 1$$", "$$\\frac{x}{y} = k + 1$$", "$$\\frac{x}{y} = \\frac{k}{1 - k}$$", "$$\\frac{x}{y} = 1 - k$$"], 
+        id: 7, 
+        topic: "Expresiones Algebraicas", 
+        text: "Desarrolle y simplifique: $$(2x - 3y)^2 - (2x + 3y)^2$$", 
+        options: ["$-24xy$", "$24xy$", "$8x^2 - 18y^2$", "$0$"], 
         correct: 0,
-        explanation: "1. Separamos la fracción: $\\frac{x}{y} + \\frac{y}{y} = k \\implies \\frac{x}{y} + 1 = k$. <br>2. Restamos 1: $\\frac{x}{y} = k - 1$."
+        explanation: "Usando diferencia de cuadrados $A^2 - B^2 = (A - B)(A + B)$: <br>$A = 2x - 3y$, $B = 2x + 3y$ <br>$(A - B) = (2x - 3y) - (2x + 3y) = -6y$ <br>$(A + B) = (2x - 3y) + (2x + 3y) = 4x$ <br>Resultado: $(-6y)(4x) = -24xy$."
     },
     { 
-        id: 30, topic: "Razonamiento - Interés Simple", 
-        text: "Dada la fórmula de interés simple $I = C \\cdot i \\cdot t$, despeje la tasa de interés ($i$):", 
-        options: ["$$i = \\frac{I}{C \\cdot t}$$", "$$i = \\frac{C \\cdot t}{I}$$", "$$i = I - C - t$$", "$$i = \\frac{I \\cdot t}{C}$$"], 
+        id: 8, 
+        topic: "Expresiones Algebraicas", 
+        text: "Factorice completamente la expresión: $$x^3 - 8y^3$$", 
+        options: ["$(x - 2y)(x^2 + 2xy + 4y^2)$", "$(x - 2y)(x^2 - 2xy + 4y^2)$", "$(x + 2y)(x^2 - 2xy + 4y^2)$", "$(x - 2y)^3$"], 
         correct: 0,
-        explanation: "El producto $C \\cdot t$ multiplica a $i$, por lo que pasa dividiendo: $i = \\frac{I}{C \\cdot t}$."
+        explanation: "Fórmula de diferencia de cubos: $A^3 - B^3 = (A - B)(A^2 + AB + B^2)$. <br>Con $A = x$ y $B = 2y$, resulta: $(x - 2y)(x^2 + 2xy + 4y^2)$."
     },
     { 
-        id: 31, topic: "Razonamiento - Interés Compuesto", 
-        text: "En la fórmula de monto con interés compuesto $M = C(1 + i)^n$, despeje el capital inicial ($C$):", 
-        options: ["$$C = \\frac{M}{(1 + i)^n}$$", "$$C = M(1 + i)^n$$", "$$C = \\frac{(1 + i)^n}{M}$$", "$$C = M - (1 + i)^n$$"], 
+        id: 9, 
+        topic: "Expresiones Algebraicas", 
+        text: "Si $x + \\frac{1}{x} = 5$, encuentre el valor de $x^2 + \\frac{1}{x^2}$:", 
+        options: ["$23$", "$25$", "$21$", "$27$"], 
         correct: 0,
-        explanation: "El binomio $(1 + i)^n$ multiplica al capital $C$, pasa dividiendo: $C = \\frac{M}{(1 + i)^n}$."
+        explanation: "Elevando ambos lados al cuadrado: <br>$(x + \\frac{1}{x})^2 = 5^2 \\implies x^2 + 2(x)(\\frac{1}{x}) + \\frac{1}{x^2} = 25$ <br>$x^2 + 2 + \\frac{1}{x^2} = 25 \\implies x^2 + \\frac{1}{x^2} = 23$."
     },
     { 
-        id: 32, topic: "Razonamiento - Mezclas y Aleaciones", 
-        text: "Dada la concentración de una mezcla $C_m = \\frac{m_1 c_1 + m_2 c_2}{m_1 + m_2}$, despeje la masa $m_1$ si se conoce todo lo demás:", 
-        options: ["$$m_1 = \\frac{m_2(c_2 - C_m)}{C_m - c_1}$$", "$$m_1 = \\frac{m_2(C_m - c_1)}{c_2 - C_m}$$", "$$m_1 = \\frac{m_2 c_2}{m_2 + c_1}$$", "$$m_1 = m_2 \\cdot \\frac{c_1 + c_2}{C_m}$$"], 
+        id: 10, 
+        topic: "Expresiones Algebraicas", 
+        text: "Factorice el trinomio: $$6x^2 + 7x - 3$$", 
+        options: ["$(2x + 3)(3x - 1)$", "$(3x + 3)(2x - 1)$", "$(6x - 1)(x + 3)$", "$(2x - 3)(3x + 1)$"], 
         correct: 0,
-        explanation: "1. Multiplicamos por $(m_1 + m_2)$: $C_m m_1 + C_m m_2 = m_1 c_1 + m_2 c_2$. <br>2. Agrupamos términos con $m_1$ a un lado y factorizamos."
+        explanation: "Buscamos dos números que multiplicados den $6 \\cdot (-3) = -18$ y sumados den $7$: son $9$ y $-2$. <br>$6x^2 + 9x - 2x - 3 = 3x(2x + 3) - 1(2x + 3) = (2x + 3)(3x - 1)$."
     },
     { 
-        id: 33, topic: "Razonamiento - Velocidad Promedio", 
-        text: "Para un recorrido con dos tramos a velocidades $v_1$ y $v_2$, la velocidad armónica media es $v_{prom} = \\frac{2 v_1 v_2}{v_1 + v_2}$. Despeje $v_1$:", 
-        options: ["$$v_1 = \\frac{v_{prom} v_2}{2v_2 - v_{prom}}$$", "$$v_1 = \\frac{2v_{prom} v_2}{v_2 - v_{prom}}$$", "$$v_1 = \\frac{v_2}{2 - v_{prom}}$$", "$$v_1 = v_{prom} - v_2$$"], 
+        id: 11, 
+        topic: "Expresiones Algebraicas", 
+        text: "Simplifique la fracción algebraica: $$\\frac{x^2 - 9}{x^2 - 5x + 6}$$", 
+        options: ["$\\frac{x + 3}{x - 2}$", "$\\frac{x - 3}{x - 2}$", "$\\frac{x + 3}{x + 2}$", "$\\frac{x - 3}{x + 2}$"], 
         correct: 0,
-        explanation: "1. Multiplicamos por $(v_1 + v_2)$: $v_{prom}v_1 + v_{prom}v_2 = 2v_1 v_2$. <br>2. Despejamos factor común $v_1$."
+        explanation: "Factorizando numerador y denominador: <br>Numerador: $(x-3)(x+3)$ <br>Denominador: $(x-3)(x-2)$ <br>Cancelando $(x-3)$: $\\frac{x+3}{x-2}$."
+    },
+
+    // Tema 4: Ecuaciones de primer grado (6)
+    { 
+        id: 12, 
+        topic: "Ecuaciones de Primer Grado", 
+        text: "Resuelva la siguiente ecuación: $$\\frac{3x - 1}{4} - \\frac{x + 2}{2} = 1$$", 
+        options: ["$x = 7$", "$x = 5$", "$x = 9$", "$x = 3$"], 
+        correct: 0,
+        explanation: "Multiplicando toda la ecuación por el MCM ($4$): <br>$(3x - 1) - 2(x + 2) = 4 \\implies 3x - 1 - 2x - 4 = 4$ <br>$x - 5 = 4 \\implies x = 9$."
     },
     { 
-        id: 34, topic: "Razonamiento - Trabajo en Equipo", 
-        text: "En problemas de trabajo conjunto, si $\\frac{1}{t_1} + \\frac{1}{t_2} = \\frac{1}{T}$, despeje el tiempo total $T$:", 
-        options: ["$$T = \\frac{t_1 t_2}{t_1 + t_2}$$", "$$T = t_1 + t_2$$", "$$T = \\frac{t_1 + t_2}{t_1 t_2}$$", "$$T = \\sqrt{t_1 t_2}$$"], 
+        id: 13, 
+        topic: "Ecuaciones de Primer Grado", 
+        text: "Tres números consecutivos suman $126$. ¿Cuál es el número mayor?", 
+        options: ["$43$", "$41$", "$42$", "$44$"], 
         correct: 0,
-        explanation: "1. Sumamos las fracciones del lado izquierdo: $\\frac{t_2 + t_1}{t_1 t_2} = \\frac{1}{T}$. <br>2. Invertimos ambos miembros."
+        explanation: "Ecuación: $x + (x+1) + (x+2) = 126 \\implies 3x + 3 = 126 \\implies 3x = 123 \\implies x = 41$. <br>El mayor es $x + 2 = 43$."
     },
     { 
-        id: 35, topic: "Razonamiento - Caída Libre", 
-        text: "En la ecuación de caída libre $h = \\frac{1}{2}gt^2$, despeje el tiempo $t$:", 
-        options: ["$$t = \\sqrt{\\frac{2h}{g}}$$", "$$t = \\frac{2h}{g}$$", "$$t = \\sqrt{\\frac{h}{2g}}$$", "$$t = \\frac{h}{2g}$$"], 
+        id: 14, 
+        topic: "Ecuaciones de Primer Grado", 
+        text: "Si al triple de un número se le resta $15$, se obtiene el doble del mismo número aumentado en $10$. El número es:", 
+        options: ["$25$", "$20$", "$15$", "$30$"], 
         correct: 0,
-        explanation: "1. Multiplicamos por 2: $2h = gt^2$. <br>2. Dividimos entre $g$: $t^2 = \\frac{2h}{g}$. <br>3. Raíz cuadrada."
+        explanation: "Planteamiento: $3x - 15 = 2x + 10 \\implies 3x - 2x = 10 + 15 \\implies x = 25$."
     },
     { 
-        id: 36, topic: "Razonamiento - Presión Hidrostática", 
-        text: "Dada la presión total absoluta $P = P_0 + \\rho g h$, despeje la profundidad $h$:", 
-        options: ["$$h = \\frac{P - P_0}{\\rho g}$$", "$$h = \\frac{P + P_0}{\\rho g}$$", "$$h = \\frac{\\rho g}{P - P_0}$$", "$$h = P - P_0 - \\rho g$$"], 
+        id: 15, 
+        topic: "Ecuaciones de Primer Grado", 
+        text: "Un padre tiene $40$ años y su hijo $10$. ¿Dentro de cuántos años la edad del padre será el triple de la del hijo?", 
+        options: ["$5$ años", "$10$ años", "$8$ años", "$6$ años"], 
         correct: 0,
-        explanation: "1. Restamos la presión atmosférica $P_0$: $P - P_0 = \\rho g h$. <br>2. Dividimos entre $\\rho g$."
+        explanation: "Sea $t$ los años transcurridos: <br>$40 + t = 3(10 + t) \\implies 40 + t = 30 + 3t \\implies 2t = 10 \\implies t = 5$ años."
     },
     { 
-        id: 37, topic: "Razonamiento - Teorema de Pitágoras", 
-        text: "En el triángulo rectángulo $c^2 = a^2 + b^2$, despeje el cateto $a$:", 
-        options: ["$$a = \\sqrt{c^2 - b^2}$$", "$$a = c - b$$", "$$a = \\sqrt{c^2 + b^2}$$", "$$a = c^2 - b^2$$"], 
+        id: 16, 
+        topic: "Ecuaciones de Primer Grado", 
+        text: "Resuelva para $x$: $$5(x - 2) - 3(2x + 1) = 4(x - 1) + 1$$", 
+        options: ["$x = -2$", "$x = 2$", "$x = -4$", "$x = 4$"], 
         correct: 0,
-        explanation: "1. Pasamos $b^2$ restando: $c^2 - b^2 = a^2$. <br>2. Aplicamos raíz cuadrada."
+        explanation: "Destruyendo paréntesis: <br>$5x - 10 - 6x - 3 = 4x - 4 + 1 \\implies -x - 13 = 4x - 3$ <br>$-5x = 10 \\implies x = -2$."
     },
     { 
-        id: 38, topic: "Razonamiento - Perímetro y Área", 
-        text: "Dada la fórmula del área de un trapecio $A = \\frac{(B + b) \\cdot h}{2}$, despeje la base mayor $B$:", 
-        options: ["$$B = \\frac{2A}{h} - b$$", "$$B = \\frac{A}{2h} + b$$", "$$B = \\frac{2A - b}{h}$$", "$$B = \\frac{A - bh}{2}$$"], 
+        id: 17, 
+        topic: "Ecuaciones de Primer Grado", 
+        text: "La suma de dos números es $80$ y su diferencia es $20$. Hallar el número menor.", 
+        options: ["$30$", "$50$", "$25$", "$35$"], 
         correct: 0,
-        explanation: "1. Multiplicamos por 2: $2A = (B + b)h$. <br>2. Dividimos entre $h$: $\\frac{2A}{h} = B + b$. <br>3. Restamos $b$."
+        explanation: "Sistema: $x + y = 80$ y $x - y = 20$. <br>Sumando: $2x = 100 \\implies x = 50$. <br>El menor es $y = 80 - 50 = 30$."
+    },
+
+    // Tema 5: Sistema de ecuaciones (1)
+    { 
+        id: 18, 
+        topic: "Sistema de Ecuaciones", 
+        text: "Resuelva el sistema y halle el valor de $x + y$: $$\\begin{cases} 2x + 3y = 13 \\\\ 5x - 2y = 4 \\end{cases}$$", 
+        options: ["$5$", "$6$", "$7$", "$4$"], 
+        correct: 0,
+        explanation: "Multiplicando la 1ª por 2 y la 2ª por 3: <br>$4x + 6y = 26$ <br>$15x - 6y = 12$ <br>Sumando: $19x = 38 \\implies x = 2$. <br>Sustituyendo $x$: $2(2) + 3y = 13 \\implies 3y = 9 \\implies y = 3$. <br>Suma $x + y = 2 + 3 = 5$."
+    },
+
+    // Tema 6: Cálculo de edades (3)
+    { 
+        id: 19, 
+        topic: "Cálculo de Edades", 
+        text: "La edad actual de Pedro es el triple de la de Juan. Si hace $5$ años la suma de sus edades era $30$ años, ¿cuál es la edad actual de Pedro?", 
+        options: ["$30$ años", "$10$ años", "$25$ años", "$35$ años"], 
+        correct: 0,
+        explanation: "Juan actual = $x$, Pedro actual = $3x$. <br>Hace 5 años: $(x - 5) + (3x - 5) = 30 \\implies 4x - 10 = 30 \\implies 4x = 40 \\implies x = 10$. <br>Edad de Pedro = $3(10) = 30$ años."
     },
     { 
-        id: 39, topic: "Razonamiento - Densidad de Población", 
-        text: "Dada la densidad poblacional $D = \\frac{Población (N)}{Área (S)}$, despeje el Área ($S$):", 
-        options: ["$$S = \\frac{N}{D}$$", "$$S = N \\cdot D$$", "$$S = \\frac{D}{N}$$", "$$S = N - D$$"], 
+        id: 20, 
+        topic: "Cálculo de Edades", 
+        text: "Dentro de $10$ años, María tendrá el doble de la edad que tenía hace $5$ años. ¿Qué edad tiene María hoy?", 
+        options: ["$20$ años", "$15$ años", "$25$ años", "$18$ años"], 
         correct: 0,
-        explanation: "Intercambiamos $S$ y $D$ mediante producto cruzado: $S = \\frac{N}{D}$."
+        explanation: "Ecuación: $x + 10 = 2(x - 5) \\implies x + 10 = 2x - 10 \\implies x = 20$ años."
     },
     { 
-        id: 40, topic: "Razonamiento - Escalas y Mapas", 
-        text: "En la proporción de escalas $E = \\frac{d_{mapa}}{d_{real}}$, despeje la distancia real ($d_{real}$):", 
-        options: ["$$d_{real} = \\frac{d_{mapa}}{E}$$", "$$d_{real} = d_{mapa} \\cdot E$$", "$$d_{real} = \\frac{E}{d_{mapa}}$$", "$$d_{real} = d_{mapa} - E$$"], 
+        id: 21, 
+        topic: "Cálculo de Edades", 
+        text: "La suma de las edades de Ana y Carlos es $48$ años. Si Ana es $6$ años mayor que Carlos, ¿cuántos años tiene Carlos?", 
+        options: ["$21$ años", "$27$ años", "$18$ años", "$24$ años"], 
         correct: 0,
-        explanation: "Intercambiamos $d_{real}$ y $E$: $d_{real} = \\frac{d_{mapa}}{E}$."
+        explanation: "Carlos = $c$, Ana = $c + 6$. <br>$c + (c + 6) = 48 \\implies 2c + 6 = 48 \\implies 2c = 42 \\implies c = 21$ años."
+    },
+
+    // Tema 7: Razones y proporciones (4)
+    { 
+        id: 22, 
+        topic: "Razones y Proporciones", 
+        text: "La razón entre dos números es $\\frac{3}{5}$. Si la suma de ambos números es $160$, ¿cuál es el número mayor?", 
+        options: ["$100$", "$60$", "$120$", "$90$"], 
+        correct: 0,
+        explanation: "Números: $3k$ y $5k$. <br>$3k + 5k = 160 \\implies 8k = 160 \\implies k = 20$. <br>El mayor es $5(20) = 100$."
+    },
+    { 
+        id: 23, 
+        topic: "Razones y Proporciones", 
+        text: "En una academia la relación entre hombres y mujeres es de $4$ a $7$. Si hay $140$ mujeres, ¿cuántos hombres hay?", 
+        options: ["$80$", "$70$", "$90$", "$60$"], 
+        correct: 0,
+        explanation: "Proporción: $\\frac{H}{M} = \\frac{4}{7} \\implies \\frac{H}{140} = \\frac{4}{7} \\implies H = 140 \\cdot \\frac{4}{7} = 80$."
+    },
+    { 
+        id: 24, 
+        topic: "Razones y Proporciones", 
+        text: "Dos números están en la relación $2:3$. Si se añade $8$ a cada uno, la nueva relación es $3:4$. Calcular el número menor.", 
+        options: ["$16$", "$24$", "$12$", "$20$"], 
+        correct: 0,
+        explanation: "Planteamiento: $\\frac{2k + 8}{3k + 8} = \\frac{3}{4} \\implies 4(2k + 8) = 3(3k + 8)$ <br>$8k + 32 = 9k + 24 \\implies k = 8$. <br>El número menor es $2k = 2(8) = 16$."
+    },
+    { 
+        id: 25, 
+        topic: "Razones y Proporciones", 
+        text: "Si $A:B = 2:3$ y $B:C = 4:5$, determine la relación $A:C$:", 
+        options: ["$8:15$", "$2:5$", "$6:15$", "$8:10$"], 
+        correct: 0,
+        explanation: "Multiplicando las razones: $\\frac{A}{B} \\cdot \\frac{B}{C} = \\frac{2}{3} \\cdot \\frac{4}{5} \\implies \\frac{A}{C} = \\frac{8}{15}$."
+    },
+
+    // Tema 8: Regla de 3 compuesta (3)
+    { 
+        id: 26, 
+        topic: "Regla de 3 Compuesta", 
+        text: "Si $8$ obreros construyen una pared en $10$ días trabajando $6$ horas diarias, ¿cuántos días tardarán $5$ obreros trabajando $8$ horas diarias en hacer la misma pared?", 
+        options: ["$12$ días", "$10$ días", "$15$ días", "$14$ días"], 
+        correct: 0,
+        explanation: "Relación: $Obreros \\cdot Días \\cdot Horas = constante$. <br>$8 \\cdot 10 \\cdot 6 = 5 \\cdot d \\cdot 8 \\implies 480 = 40d \\implies d = 12$ días."
+    },
+    { 
+        id: 27, 
+        topic: "Regla de 3 Compuesta", 
+        text: "Para alimentar $12$ caballos durante $8$ días se necesitan $384$ kg de heno. ¿Cuántos kg de heno se necesitarán para alimentar $15$ caballos durante $5$ días?", 
+        options: ["$300$ kg", "$320$ kg", "$280$ kg", "$350$ kg"], 
+        correct: 0,
+        explanation: "Relación: $\\frac{Heno}{Caballos \\cdot Días} = constante$. <br>$\\frac{384}{12 \\cdot 8} = \\frac{x}{15 \\cdot 5} \\implies \\frac{384}{96} = \\frac{x}{75} \\implies 4 = \\frac{x}{75} \\implies x = 300$ kg."
+    },
+    { 
+        id: 28, 
+        topic: "Regla de 3 Compuesta", 
+        text: "Un grupo de $10$ impresoras trabaja $3$ horas diarias para imprimir $5000$ folletos en $4$ días. ¿Cuántas horas diarias deberán trabajar $6$ impresoras para imprimir $8000$ folletos en $8$ días?", 
+        options: ["$4$ horas", "$5$ horas", "$3$ horas", "$6$ horas"], 
+        correct: 0,
+        explanation: "Relación: $\\frac{Impresoras \\cdot Horas \\cdot Días}{Folletos} = cte$. <br>$\\frac{10 \\cdot 3 \\cdot 4}{5000} = \\frac{6 \\cdot h \\cdot 8}{8000} \\implies \\frac{120}{5000} = \\frac{48h}{8000} \\implies \\frac{120}{5} = \\frac{48h}{8} \\implies 24 = 6h \\implies h = 4$ horas."
+    },
+
+    // Tema 9: Porcentajes y Proporcionalidad (5)
+    { 
+        id: 29, 
+        topic: "Porcentajes y Proporcionalidad", 
+        text: "¿Cuál es la media proporcional entre $4$ y $16$?", 
+        options: ["$8$", "$10$", "$6$", "$12$"], 
+        correct: 0,
+        explanation: "Media proporcional $x = \\sqrt{a \\cdot b} = \\sqrt{4 \\cdot 16} = \\sqrt{64} = 8$."
+    },
+    { 
+        id: 30, 
+        topic: "Porcentajes y Proporcionalidad", 
+        text: "Halle la tercera proporcional entre $9$ y $12$:", 
+        options: ["$16$", "$15$", "$18$", "$20$"], 
+        correct: 0,
+        explanation: "Tercera proporcional: $\\frac{9}{12} = \\frac{12}{x} \\implies 9x = 144 \\implies x = 16$."
+    },
+    { 
+        id: 31, 
+        topic: "Porcentajes y Proporcionalidad", 
+        text: "Un artículo cuesta $\$200$. Se le aplica un descuento del $20\\%$ y luego un incremento del $10\\%$. ¿Cuál es el precio final?", 
+        options: ["$\$176$", "$\$180$", "$\$170$", "$\$184$"], 
+        correct: 0,
+        explanation: "1. Con 20% descuento: $200 \\cdot 0.80 = 160$. <br>2. Con 10% incremento: $160 \\cdot 1.10 = 176$ dólares."
+    },
+    { 
+        id: 32, 
+        topic: "Porcentajes y Proporcionalidad", 
+        text: "El $35\\%$ de un número es $140$. ¿Cuál es el $60\\%$ de ese mismo número?", 
+        options: ["$240$", "$400$", "$280$", "$210$"], 
+        correct: 0,
+        explanation: "Número total $N = \\frac{140}{0.35} = 400$. <br>El 60% de 400 es $400 \\cdot 0.60 = 240$."
+    },
+    { 
+        id: 33, 
+        topic: "Porcentajes y Proporcionalidad", 
+        text: "Si el precio de un producto aumentó de $\$80$ a $\$100$, ¿cuál fue el porcentaje de aumento?", 
+        options: ["$25\\%$", "$20\\%$", "$15\\%$", "$30\\%$"], 
+        correct: 0,
+        explanation: "Aumento en valor: $100 - 80 = 20$. <br>Porcentaje = $\\frac{20}{80} \\cdot 100\\% = 25\\%$."
+    },
+
+    // Tema 10: Media aritmética (2)
+    { 
+        id: 34, 
+        topic: "Media Aritmética", 
+        text: "El promedio de $5$ números es $18$. Si se elimina uno de los números, el promedio de los restantes pasa a ser $20$. ¿Qué número se eliminó?", 
+        options: ["$10$", "$12$", "$8$", "$14$"], 
+        correct: 0,
+        explanation: "Suma inicial = $5 \\cdot 18 = 90$. <br>Suma final de 4 números = $4 \\cdot 20 = 80$. <br>Número eliminado = $90 - 80 = 10$."
+    },
+    { 
+        id: 35, 
+        topic: "Media Aritmética", 
+        text: "Las notas de un estudiante en 4 exámenes son: $14, 16, 12, 18$. ¿Qué nota debe sacar en el quinto examen para obtener un promedio de $16$?", 
+        options: ["$20$", "$18$", "$19$", "$17$"], 
+        correct: 0,
+        explanation: "Suma deseada de 5 notas = $5 \\cdot 16 = 80$. <br>Suma de las 4 notas = $14 + 16 + 12 + 18 = 60$. <br>Nota necesaria = $80 - 60 = 20$."
+    },
+
+    // Tema 11: Combinatoria (5)
+    { 
+        id: 36, 
+        topic: "Combinatoria", 
+        text: "¿De cuántas maneras distintas se pueden organizar $5$ personas en una fila?", 
+        options: ["$120$", "$60$", "$24$", "$720$"], 
+        correct: 0,
+        explanation: "Permutación simple: $5! = 5 \\cdot 4 \\cdot 3 \\cdot 2 \\cdot 1 = 120$ maneras."
+    },
+    { 
+        id: 37, 
+        topic: "Combinatoria", 
+        text: "Un grupo de $8$ estudiantes desea elegir un presidente, un vicepresidente y un secretario. ¿Cuántas directivas diferentes se pueden formar?", 
+        options: ["$336$", "$56$", "$672$", "$120$"], 
+        correct: 0,
+        explanation: "Importa el orden (Variación): $V(8,3) = 8 \\cdot 7 \\cdot 6 = 336$ directivas."
+    },
+    { 
+        id: 38, 
+        topic: "Combinatoria", 
+        text: "¿Cuántos comités diferentes de $3$ personas se pueden formar a partir de un grupo de $7$ candidatos?", 
+        options: ["$35$", "$210$", "$70$", "$42$"], 
+        correct: 0,
+        explanation: "No importa el orden (Combinación): $C(7,3) = \\frac{7 \\cdot 6 \\cdot 5}{3 \\cdot 2 \\cdot 1} = 35$ comités."
+    },
+    { 
+        id: 39, 
+        topic: "Combinatoria", 
+        text: "¿Cuántas palabras de $4$ letras (con o sin sentido) se pueden formar utilizando las letras de la palabra $AMOR$ sin repetir ninguna?", 
+        options: ["$24$", "$12$", "$16$", "$256$"], 
+        correct: 0,
+        explanation: "Permutación de 4 elementos distintos: $4! = 4 \\cdot 3 \\cdot 2 \\cdot 1 = 24$ palabras."
+    },
+    { 
+        id: 40, 
+        topic: "Combinatoria", 
+        text: "En un torneo de ajedrez participan $10$ jugadores. Si todos juegan contra todos una sola vez, ¿cuántas partidas se disputarán en total?", 
+        options: ["$45$", "$90$", "$100$", "$50$"], 
+        correct: 0,
+        explanation: "Elección de parejas sin importar orden: $C(10,2) = \\frac{10 \\cdot 9}{2} = 45$ partidas."
     }
 ];
 
-// TIEMPO CONFIGURADO: 80 minutos = 4800 segundos
+// TIEMPO CONFIGURADO: 80 minutos = 80 * 60 = 4800 segundos
 const TOTAL_TIME = 80 * 60; 
-const STORAGE_KEY = "EVAL_DESPEJES_PRO_STATE";
+const STORAGE_KEY = "EVAL_NUMERICA_LIGHT_STATE";
 
 let state = {
     user: { name: '', id: '' },
@@ -375,7 +431,7 @@ function setupSecurity() {
 
     window.addEventListener('visibilitychange', () => {
         if (document.hidden && state.isStarted && !state.isFinished) {
-            registerInfraction("Cambio de Pestaña detectado");
+            registerInfraction("Cambio de Pestaña");
         }
     });
 
@@ -395,7 +451,7 @@ function setupSecurity() {
             e.key === 'PrintScreen'
         ) {
             e.preventDefault();
-            registerInfraction("Intento de uso de atajo de teclado restringido");
+            registerInfraction("Intento de uso de atajo restringido");
         }
     });
 }
@@ -411,7 +467,7 @@ function registerInfraction(reason) {
     banner.style.display = 'block';
 
     if (state.infractions >= 3) {
-        alert("Límite de 3 infracciones de seguridad alcanzado. La evaluación se enviará de forma automática.");
+        alert("Límite de 3 faltas de seguridad alcanzado. La evaluación se enviará de forma automática.");
         finishExam();
     }
 }
@@ -534,7 +590,7 @@ function updateProgress() {
 function confirmFinish() {
     const answeredCount = Object.keys(state.answers).length;
     const unanswered = questionsData.length - answeredCount;
-    let msg = "¿Está seguro de finalizar y enviar la evaluación institucional?";
+    let msg = "¿Está seguro de finalizar y entregar la evaluación?";
     if (unanswered > 0) {
         msg += `\n⚠️ Advertencia: Aún tiene ${unanswered} pregunta(s) sin responder.`;
     }
@@ -591,7 +647,7 @@ function showResultsScreen() {
                 Respuesta correcta: <strong style="color: var(--success);">${letters[q.correct]}) ${q.options[q.correct]}</strong>
             </div>
             <div class="feedback-box">
-                <strong>💡 Solución detallada paso a paso:</strong><br>
+                <strong>💡 Retroalimentación / Solución paso a paso:</strong><br>
                 ${q.explanation}
             </div>
         `;
@@ -610,6 +666,7 @@ function showResultsScreen() {
     }
 }
 
+// Función para descargar reporte PDF formateado
 function downloadPDF() {
     const element = document.getElementById('report-content');
     const { jsPDF } = window.jspdf;
@@ -622,6 +679,6 @@ function downloadPDF() {
         const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
         pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-        pdf.save(`Reporte_Despejes_${state.user.id || 'Estudiante'}.pdf`);
+        pdf.save(`Reporte_Evaluacion_${state.user.id || 'Estudiante'}.pdf`);
     });
 }
