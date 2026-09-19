@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EVALUACIÓN DIAGNÓSTICA - RAZONAMIENTO NUMÉRICO</title>
     
-    <!-- KaTeX CSS & JS -->
+    <!-- KaTeX Render -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
@@ -15,35 +15,35 @@
 </head>
 <body>
 
-    <!-- Overlay Pantalla Completa y Registro -->
+    <!-- Modal de Identificación y Reingreso Seguros -->
     <div id="fullscreen-overlay" class="overlay-modal">
         <div class="modal-box">
-            <h1>EVALUACIÓN DE RAZONAMIENTO</h1>
-            <p>Por favor, ingrese sus datos para iniciar. Esta prueba cuenta con monitoreo activo de seguridad y modo kiosko.</p>
+            <h1>PLATA DE EVALUACIÓN ESTANDARIZADA</h1>
+            <p>Ingrese sus datos institucionales para comenzar. La prueba funciona en modo supervisado (Pantalla Completa Obligatoria).</p>
             
             <form id="student-form" onsubmit="event.preventDefault(); initExam();">
                 <div class="form-group">
-                    <label>Nombre Completo:</label>
-                    <input type="text" id="student-name" required placeholder="Ej. Juan Pérez">
+                    <label>Nombre y Apellido Completo:</label>
+                    <input type="text" id="student-name" required placeholder="Ej. Carlos Mendoza">
                 </div>
                 <div class="form-group">
-                    <label>Cédula / Documento:</label>
-                    <input type="text" id="student-id" required placeholder="Ej. 1104567890">
+                    <label>Número de Cédula / Identificación:</label>
+                    <input type="text" id="student-id" required placeholder="Ej. 1104523891">
                 </div>
                 <button type="submit" class="btn-start">Iniciar / Reanudar Evaluación</button>
             </form>
         </div>
     </div>
 
-    <!-- App Main Container -->
+    <!-- App Principal -->
     <div id="app-container">
         <header>
             <div class="header-title">
-                <h2>RAZONAMIENTO NUMÉRICO</h2>
-                <span id="user-display">EVALUACIÓN ESTANDARIZADA</span>
+                <h2>RAZONAMIENTO NUMÉRICO Y DESPEJES</h2>
+                <span id="user-display">EVALUACIÓN DE HABILIDADES MATEMÁTICAS</span>
             </div>
             <div class="timer-badge" id="timer-display">
-                ⏱️ <span id="timer">60:00</span>
+                ⏱️ <span id="timer">80:00</span>
             </div>
         </header>
 
@@ -51,7 +51,7 @@
             <main>
                 <div>
                     <div id="infraction-banner">
-                        ⚠️ ATENCIÓN: Cambio de pestaña o pérdida de foco detectada (<span id="infraction-count">0</span>/3). Al llegar a 3 el examen se enviará automáticamente.
+                        ⚠️ ALERTA DE SEGURIDAD: Pérdida de foco o salida detectada (<span id="infraction-count">0</span>/3). Al acumular 3 la prueba se auto-enviará.
                     </div>
 
                     <div class="question-card">
@@ -74,7 +74,7 @@
                 <div>
                     <div class="progress-section">
                         <div class="progress-label">
-                            <span>Progreso</span>
+                            <span>Avance de Respuestas</span>
                             <span id="progress-percent">0%</span>
                         </div>
                         <div class="progress-bar-bg">
@@ -82,7 +82,7 @@
                         </div>
                     </div>
 
-                    <div class="grid-title">Mapa de Reactivos</div>
+                    <div class="grid-title">Navegación de Preguntas</div>
                     <div class="reactive-grid" id="reactive-grid"></div>
                 </div>
 
@@ -90,18 +90,18 @@
             </aside>
         </div>
 
-        <!-- Pantalla de Resultados -->
+        <!-- Pantalla de Calificación Final -->
         <div id="results-screen">
             <div class="results-container">
-                <h1 style="margin-bottom: 20px; color: var(--primary-neon);">Reporte de Resultados</h1>
+                <h1 style="margin-bottom: 25px; color: var(--primary);">Informe de Resultados</h1>
                 
                 <div class="score-cards">
                     <div class="card-stat">
-                        <h3>Puntaje Obtenido</h3>
+                        <h3>Reactivos Correctos</h3>
                         <div class="value" id="res-score">0/40</div>
                     </div>
                     <div class="card-stat">
-                        <h3>Porcentaje de Acierto</h3>
+                        <h3>Rendimiento Total</h3>
                         <div class="value" id="res-accuracy">0%</div>
                     </div>
                     <div class="card-stat">
@@ -111,7 +111,7 @@
                 </div>
 
                 <div class="review-section">
-                    <h2 style="margin-bottom: 15px; font-size: 1.1rem; color: var(--primary-neon);">Revisión Detallada de Respuestas</h2>
+                    <h2 style="margin-bottom: 20px; font-size: 1.1rem; color: var(--primary);">Revisión de Desempeño por Pregunta</h2>
                     <div id="review-list"></div>
                 </div>
             </div>

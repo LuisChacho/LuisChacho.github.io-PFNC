@@ -1,4 +1,4 @@
-// BANCO DE PREGUNTAS (40 REACTIVOS)
+// BANCO DE 40 PREGUNTAS EXACTAS
 const questionsData = [
     // Tema 1: Simplificación (3)
     { id: 1, topic: "Simplificación de Expresiones Algebraicas", text: "Simplifique la siguiente expresión: $$\\frac{(x^2 y^{-3})^3}{(x^{-1} y^2)^2}$$", options: ["$x^8 y^{-13}$", "$x^4 y^{-11}$", "$x^8 y^{-7}$", "$x^5 y^{-13}$"], correct: 0 },
@@ -55,7 +55,7 @@ const questionsData = [
     { id: 34, topic: "Media Aritmética", text: "El promedio de $5$ números es $18$. Si se elimina uno de los números, el promedio de los restantes pasa a ser $20$. ¿Qué número se eliminó?", options: ["$10$", "$12$", "$8$", "$14$"], correct: 0 },
     { id: 35, topic: "Media Aritmética", text: "Las notas de un estudiante en 4 exámenes son: $14, 16, 12, 18$. ¿Qué nota debe sacar en el quinto examen para obtener un promedio de $16$?", options: ["$20$", "$18$", "$19$", "$17$"], correct: 0 },
 
-    // Tema 11: Combinación, Variación y Permutación (5)
+    // Tema 11: Combinatoria (5)
     { id: 36, topic: "Combinatoria", text: "¿De cuántas maneras distintas se pueden organizar $5$ personas en una fila?", options: ["$120$", "$60$", "$24$", "$720$"], correct: 0 },
     { id: 37, topic: "Combinatoria", text: "Un grupo de $8$ estudiantes desea elegir un presidente, un vicepresidente y un secretario. ¿Cuántas directivas diferentes se pueden formar?", options: ["$336$", "$56$", "$672$", "$120$"], correct: 0 },
     { id: 38, topic: "Combinatoria", text: "¿Cuántos comités diferentes de $3$ personas se pueden formar a partir de un grupo de $7$ candidatos?", options: ["$35$", "$210$", "$70$", "$42$"], correct: 0 },
@@ -63,8 +63,9 @@ const questionsData = [
     { id: 40, topic: "Combinatoria", text: "En un torneo de ajedrez participan $10$ jugadores. Si todos juegan contra todos una sola vez, ¿cuántas partidas se disputarán en total?", options: ["$45$", "$90$", "$100$", "$50$"], correct: 0 }
 ];
 
-const TOTAL_TIME = 60 * 60;
-const STORAGE_KEY = "EVAL_NUMERICA_PRO_STATE";
+// TIEMPO CONFIGURADO: 80 minutos = 80 * 60 = 4800 segundos
+const TOTAL_TIME = 80 * 60; 
+const STORAGE_KEY = "EVAL_NUMERICA_LIGHT_STATE";
 
 let state = {
     user: { name: '', id: '' },
@@ -155,7 +156,7 @@ function setupSecurity() {
 
     window.addEventListener('blur', () => {
         if (state.isStarted && !state.isFinished) {
-            registerInfraction("Pérdida de foco del examen");
+            registerInfraction("Pérdida de foco en la ventana");
         }
     });
 
@@ -169,7 +170,7 @@ function setupSecurity() {
             e.key === 'PrintScreen'
         ) {
             e.preventDefault();
-            registerInfraction("Intento de uso de atajo de teclado");
+            registerInfraction("Intento de uso de atajo restringido");
         }
     });
 }
@@ -185,7 +186,7 @@ function registerInfraction(reason) {
     banner.style.display = 'block';
 
     if (state.infractions >= 3) {
-        alert("Ha alcanzado el límite máximo de 3 infracciones de seguridad. La evaluación se enviará automáticamente.");
+        alert("Límite de 3 faltas de seguridad alcanzado. La evaluación se enviará de forma automática.");
         finishExam();
     }
 }
@@ -214,7 +215,8 @@ function updateTimerUI() {
     
     timerEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     
-    if (state.timeLeft <= 300) {
+    // Alerta visual a los últimos 10 minutos (600 segundos)
+    if (state.timeLeft <= 600) {
         badgeEl.classList.add('timer-warning');
     }
 }
@@ -308,9 +310,9 @@ function updateProgress() {
 function confirmFinish() {
     const answeredCount = Object.keys(state.answers).length;
     const unanswered = questionsData.length - answeredCount;
-    let msg = "¿Está seguro de finalizar la evaluación?";
+    let msg = "¿Está seguro de finalizar y entregar la evaluación?";
     if (unanswered > 0) {
-        msg += `\n⚠️ Tiene ${unanswered} pregunta(s) sin responder.`;
+        msg += `\n⚠️ Advertencia: Aún tiene ${unanswered} pregunta(s) sin responder.`;
     }
     if (confirm(msg)) {
         finishExam();
@@ -355,8 +357,8 @@ function showResultsScreen() {
         item.innerHTML = `
             ${statusBadge}
             <div class="q-title">${idx + 1}. ${q.text}</div>
-            <div style="font-size: 0.85rem; color: var(--text-muted);">
-                Su respuesta: <strong>${userAns !== undefined ? letters[userAns] + ') ' + q.options[userAns] : 'Ninguna'}</strong><br>
+            <div style="font-size: 0.85rem; color: var(--text-secondary);">
+                Su respuesta: <strong>${userAns !== undefined ? letters[userAns] + ') ' + q.options[userAns] : 'Sin responder'}</strong><br>
                 Respuesta correcta: <strong style="color: var(--success);">${letters[q.correct]}) ${q.options[q.correct]}</strong>
             </div>
         `;
